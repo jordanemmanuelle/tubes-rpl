@@ -1,0 +1,5 @@
+CEK FOLDER QUERY, TAKUTNYA ADA YANG BELUM DI-RUN
+
+LOGIN AS ADMIN
+email: admin@gmail.com
+password: 123o

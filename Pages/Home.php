@@ -1,59 +1,84 @@
 <?php
-    session_start(); // Mulai session
+session_start();
+
+// Koneksi ke database
+$host = "localhost";
+$user = "root";
+$pass = ""; // Ganti jika pakai password
+$db   = "foretubes"; // Nama database kamu
+
+$conn = new mysqli($host, $user, $pass, $db);
+if ($conn->connect_error) {
+    die("Koneksi gagal: " . $conn->connect_error);
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Fore Coffee - Home</title>
-    <link rel="stylesheet" href="style.css">
-    </head>
+    <link rel="stylesheet" href="StyleHome.css" />
+</head>
 <body>
 
     <header>
-        <h1>Welcome to Fore Coffee</h1>
+        <h1>Fore Coffee</h1>
         <p>Your favorite coffee shop</p>
     </header>
 
     <nav>
-        <a href="Home.php">Home</a>
-        <a href="About.php">About Us</a>
-        <a href="Contact.php">Contact</a>
-        <a href="../LoginRegister/FormLogin.html">Login</a>
-        <a href="../LoginRegister/FormRegister.html">Register</a>
+        <a href="home.php">Home</a>
+        <a href="about.php">About Us</a>
+        <a href="contact.php">Contact</a>
+        <?php if (isset($_SESSION['id_user'])): ?>
+            <a href="../LoginRegister/Logout.php">Logout</a>
+        <?php else: ?>
+            <a href="../LoginRegister/FormRegister.html">Register</a>
+            <a href="../LoginRegister/FormLogin.html">Login</a>
+        <?php endif; ?>
     </nav>
 
-    <div class="welcome-message">
-        <h2>Welcome, <?= $_SESSION['name'] ?? 'Guest'; ?>!</h2>
-        <p>Explore our delicious coffee collection and more!</p>
-    </div>
+    <main>
+        <section class="welcome-message">
+            <h2>Welcome, <?= htmlspecialchars($_SESSION['name'] ?? 'Guest'); ?>!</h2>
+            <p>Explore our delicious coffee collection and more!</p>
+        </section>
 
-    <div class="products">
-        <div class="product-card">
-            <img src="coffee1.jpg" alt="Coffee 1">
-            <h3>Espresso</h3>
-            <p>Rich and bold flavor with a smooth finish</p>
-            <button>Order Now</button>
-        </div>
-        <div class="product-card">
-            <img src="coffee2.jpg" alt="Coffee 2">
-            <h3>Cappuccino</h3>
-            <p>Classic espresso with steamed milk and foam</p>
-            <button>Order Now</button>
-        </div>
-        <div class="product-card">
-            <img src="coffee3.jpg" alt="Coffee 3">
-            <h3>Latte</h3>
-            <p>Espresso mixed with steamed milk and a creamy taste</p>
-            <button>Order Now</button>
-        </div>
-    </div>
+        <section class="products">
+            <?php
+            $sql = "SELECT * FROM menu ORDER BY created_at DESC";
+            $result = $conn->query($sql);
 
-    <footer>
-        <p>&copy; 2025 Fore Coffee. All rights reserved.</p>
-    </footer>
+            if ($result && $result->num_rows > 0):
+                while ($row = $result->fetch_assoc()):
+            ?>
+                <div class="product-card">
+                    <img src="../Menu/uploads/<?= htmlspecialchars($row['gambar']); ?>" alt="<?= htmlspecialchars($row['nama_menu']); ?>">
+                    <div class="product-info">
+                        <h3><?= htmlspecialchars($row['nama_menu']); ?></h3>
+                        <p><?= htmlspecialchars($row['deskripsi']); ?></p>
+                        <p><strong>Jenis:</strong> <?= ucfirst($row['jenis']); ?></p>
+                        <p>Rp<?= number_format($row['harga'], 0, ',', '.'); ?></p>
+                
+                    </div>
+                    <button <?= $row['stok'] == 0 ? 'disabled' : ''; ?>>
+                        <?= $row['stok'] == 0 ? 'Out of Stock' : 'Order Now'; ?>
+                    </button>
+                </div>
+            <?php
+                endwhile;
+            else:
+                echo "<p>Belum ada menu tersedia.</p>";
+            endif;
+            ?>
+        </section>
+    </main>
+
+    <footer>&copy; 2025 Fore Coffee. All rights reserved.</footer>
 
 </body>
 </html>
+
+<?php $conn->close(); ?>

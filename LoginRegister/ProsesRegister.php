@@ -1,27 +1,52 @@
 <?php
-    include 'FormRegister.html';
+$connect = mysqli_connect("localhost", "root", "", "foretubes");
 
-    $connect = mysqli_connect("localhost", "root", "", "foretubes");
+if (mysqli_connect_errno()) {
+    echo "<script>
+            alert('Gagal koneksi ke database!');
+            window.location.href = 'FormRegister.html';
+          </script>";
+    exit();
+}
 
-    if (mysqli_connect_errno()) {
-        echo (mysqli_connect_error());
-    }
+$name = $_POST['name'];
+$email = $_POST['email'];
+$password = $_POST['password'];
+$hashed_password = md5($password); // disarankan pakai password_hash()
 
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $hashed_password = md5($password); // ini di-hash
+// Cek apakah email sudah terdaftar
+$checkQuery = "SELECT email FROM users WHERE email = ?";
+$stmtCheck = mysqli_prepare($connect, $checkQuery);
+mysqli_stmt_bind_param($stmtCheck, "s", $email);
+mysqli_stmt_execute($stmtCheck);
+mysqli_stmt_store_result($stmtCheck);
 
-    $sql = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
-    $stmt = mysqli_prepare($connect, $sql);
-    mysqli_stmt_bind_param($stmt, "sss", $name, $email, $hashed_password);
+if (mysqli_stmt_num_rows($stmtCheck) > 0) {
+    echo "<script>
+            alert('Email sudah digunakan!');
+            window.location.href = 'FormRegister.html';
+          </script>";
+    exit();
+}
+mysqli_stmt_close($stmtCheck);
 
-    if (mysqli_stmt_execute($stmt)) {
-        echo "Berhasil Daftar!";
-    } else {
-        echo "Error: " . mysqli_error($connect);
-    }
+// Lanjut insert data baru
+$sql = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
+$stmt = mysqli_prepare($connect, $sql);
+mysqli_stmt_bind_param($stmt, "sss", $name, $email, $hashed_password);
 
-    mysqli_stmt_close($stmt);
-    mysqli_close($connect);
+if (mysqli_stmt_execute($stmt)) {
+    echo "<script>
+            alert('Berhasil Daftar!');
+            window.location.href = 'FormLogin.html';
+          </script>";
+} else {
+    echo "<script>
+            alert('Gagal mendaftar: " . addslashes(mysqli_error($connect)) . "');
+            window.location.href = 'FormRegister.html';
+          </script>";
+}
+
+mysqli_stmt_close($stmt);
+mysqli_close($connect);
 ?>

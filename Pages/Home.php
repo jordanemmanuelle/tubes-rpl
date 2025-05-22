@@ -122,12 +122,12 @@ if ($conn->connect_error) {
     </main>
 
     <section class="cart-container" id="cartContainer">
-    <h2>Keranjang Saya</h2>
-    <ul id="cartItems">
-        <li>Keranjang kosong.</li>
-    </ul>
-</section>
-
+        <h2>Keranjang Saya</h2>
+        <ul id="cartItems">
+            <li>Keranjang kosong.</li>
+        </ul>
+        <button id="buyButton" style="display:none; margin-top:10px;">Beli</button>
+    </section>
 
     <footer>&copy; 2025 Fore Coffee. All rights reserved.</footer>
 
@@ -152,6 +152,11 @@ if ($conn->connect_error) {
         </div>
     </div>
 
+    <!-- Form tersembunyi untuk checkout -->
+    <form id="checkoutForm" action="checkout.php" method="POST" style="display:none;">
+        <input type="hidden" name="cart_data" id="cartData" value="" />
+    </form>
+
     <script>
         function openModal(menu) {
             document.getElementById("modalImage").src = "../Menu/uploads/" + menu.gambar;
@@ -173,62 +178,66 @@ if ($conn->connect_error) {
 
         document.getElementById("addToCartForm").addEventListener("submit", function(e) {
             e.preventDefault();
-            // Simulasi penambahan ke keranjang
-            alert("Berhasil ditambahkan ke keranjang!");
-            closeModal();
 
-            // Atau kirim ke file PHP: keranjang.php dengan AJAX jika ingin sungguhan
+            const id_menu = document.getElementById("modalIdMenu").value;
+            const nama_menu = document.getElementById("modalName").textContent;
+            const harga = parseInt(document.getElementById("modalHarga").textContent.replace(/\./g, ""));
+            const jumlah = parseInt(document.getElementById("jumlah").value);
+
+            // Cek apakah item sudah ada
+            const existingItem = cart.find(item => item.id_menu === id_menu);
+            if (existingItem) {
+                existingItem.jumlah += jumlah;
+            } else {
+                cart.push({
+                    id_menu,
+                    nama_menu,
+                    harga,
+                    jumlah
+                });
+            }
+
+            updateCartUI();
+            closeModal();
+            alert("Berhasil ditambahkan ke keranjang!");
+        });
+
+        let cart = [];
+
+        function updateCartUI() {
+            const cartItemsEl = document.getElementById("cartItems");
+            const buyButton = document.getElementById("buyButton");
+            cartItemsEl.innerHTML = "";
+
+            if (cart.length === 0) {
+                cartItemsEl.innerHTML = "<li>Keranjang kosong.</li>";
+                buyButton.style.display = "none";
+                return;
+            }
+
+            cart.forEach(item => {
+                const li = document.createElement("li");
+                li.textContent = `${item.nama_menu} (${item.jumlah}x) - Rp${(item.harga * item.jumlah).toLocaleString('id-ID')}`;
+                cartItemsEl.appendChild(li);
+            });
+
+            buyButton.style.display = "inline-block";
+        }
+
+        // Event klik tombol Beli untuk submit data keranjang ke checkout.php
+        document.getElementById("buyButton").addEventListener("click", function() {
+            if (cart.length === 0) {
+                alert("Keranjang kosong, tidak bisa melanjutkan pembelian.");
+                return;
+            }
+
+            // Kirim data cart dalam bentuk JSON string ke input hidden
+            document.getElementById("cartData").value = JSON.stringify(cart);
+
+            // Submit form
+            document.getElementById("checkoutForm").submit();
         });
     </script>
-
-
-<script>
-    let cart = [];
-
-    function updateCartUI() {
-        const cartItemsEl = document.getElementById("cartItems");
-        cartItemsEl.innerHTML = "";
-
-        if (cart.length === 0) {
-            cartItemsEl.innerHTML = "<li>Keranjang kosong.</li>";
-            return;
-        }
-
-        cart.forEach(item => {
-            const li = document.createElement("li");
-            li.textContent = `${item.nama_menu} (${item.jumlah}x) - Rp${(item.harga * item.jumlah).toLocaleString('id-ID')}`;
-            cartItemsEl.appendChild(li);
-        });
-    }
-
-    document.getElementById("addToCartForm").addEventListener("submit", function(e) {
-        e.preventDefault();
-
-        const id_menu = document.getElementById("modalIdMenu").value;
-        const nama_menu = document.getElementById("modalName").textContent;
-        const harga = parseInt(document.getElementById("modalHarga").textContent.replace(/\./g, ""));
-        const jumlah = parseInt(document.getElementById("jumlah").value);
-
-        // Cek apakah item sudah ada
-        const existingItem = cart.find(item => item.id_menu === id_menu);
-        if (existingItem) {
-            existingItem.jumlah += jumlah;
-        } else {
-            cart.push({
-                id_menu,
-                nama_menu,
-                harga,
-                jumlah
-            });
-        }
-
-        updateCartUI();
-        closeModal();
-        alert("Berhasil ditambahkan ke keranjang!");
-    });
-</script>
-
-
 
 </body>
 </html>

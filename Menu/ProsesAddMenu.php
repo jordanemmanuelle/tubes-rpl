@@ -1,15 +1,5 @@
 <?php
-$host = "localhost";
-$username = "root";
-$password = "";
-$dbname = "foretubes";
-
-$conn = new mysqli($host, $username, $password, $dbname);
-
-// Cek koneksi
-if ($conn->connect_error) {
-    die("Koneksi gagal: " . $conn->connect_error);
-}
+include '../connection.php';
 
 function clean_input($data) {
     return htmlspecialchars(strip_tags(trim($data)));

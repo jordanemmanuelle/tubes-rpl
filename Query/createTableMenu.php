@@ -1,9 +1,5 @@
 <?php
-    $connect = mysqli_connect("localhost", "root", "", "foretubes");
-
-    if (mysqli_connect_errno()) {
-        echo (mysqli_connect_error());
-    }
+    include '../connection.php';
 
     $sql = "CREATE TABLE menu (
     id_menu INT AUTO_INCREMENT PRIMARY KEY,

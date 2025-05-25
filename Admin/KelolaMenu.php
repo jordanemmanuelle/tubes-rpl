@@ -5,85 +5,104 @@
   <meta charset="UTF-8">
   <title>Tambah Menu</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
+  * {
+    box-sizing: border-box;
+  }
 
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+  }
+
+  form {
+    background-color: #fff;
+    padding: 30px;
+    width: 100%;
+    max-width: 450px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333;
+  }
+
+  label {
+    margin-top: 15px;
+    font-weight: 600;
+    color: #333;
+    display: block;
+  }
+
+  input[type="text"],
+  input[type="number"],
+  input[type="file"],
+  textarea,
+  select {
+    width: 100%;
+    padding: 10px 12px;
+    margin-top: 5px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    transition: border 0.3s ease;
+  }
+
+  input:focus,
+  textarea:focus,
+  select:focus {
+    border-color: #007BFF;
+    outline: none;
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  button {
+    margin-top: 25px;
+    width: 100%;
+    background-color: #007BFF;
+    color: white;
+    padding: 12px;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: #0056b3;
+  }
+
+  @media (max-width: 600px) {
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f2f2f2;
-      margin: 0;
-      padding: 40px;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      min-height: 100vh;
+      padding: 20px;
     }
 
     form {
-      background-color: #fff;
-      padding: 30px;
-      width: 100%;
-      max-width: 450px;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    }
-
-    h2 {
-      text-align: center;
-      margin-bottom: 25px;
-      color: #333;
-    }
-
-    label {
-      margin-top: 15px;
-      font-weight: 600;
-      color: #333;
-      display: block;
-    }
-
-    input[type="text"],
-    input[type="number"],
-    input[type="file"],
-    textarea,
-    select {
-      width: 100%;
-      padding: 10px 12px;
-      margin-top: 5px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      transition: border 0.3s ease;
-    }
-
-    input:focus,
-    textarea:focus,
-    select:focus {
-      border-color: #007BFF;
-      outline: none;
-    }
-
-    textarea {
-      resize: vertical;
+      padding: 20px;
+      max-width: 100%;
+      box-shadow: none;
+      border-radius: 0;
     }
 
     button {
-      margin-top: 25px;
-      width: 100%;
-      background-color: #007BFF;
-      color: white;
-      padding: 12px;
-      border: none;
-      font-size: 16px;
-      font-weight: 600;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
+      font-size: 14px;
+      padding: 10px;
     }
+  }
+</style>
 
-    button:hover {
-      background-color: #0056b3;
-    }
-  </style>
 </head>
 
 <body>

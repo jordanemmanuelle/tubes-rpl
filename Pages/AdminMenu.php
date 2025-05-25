@@ -70,11 +70,11 @@ if (!isset($_SESSION['id_user']) || $_SESSION['role'] !== 'admin') {
     <h1>Selamat Datang, Admin <?php echo htmlspecialchars($_SESSION['name']); ?>!</h1>
 
     <div class="menu-container">
-        <a href="../Admin/FormAddMenu.php" class="menu-item">Tambah Menu</a>
+        <a href="../Admin/KelolaMenu.php" class="menu-item">Kelola Menu</a>
         <a href="../Admin/KelolaUsers.php" class="menu-item">Kelola Pengguna</a>
-        <a href="../Admin/KelolaData.php" class="menu-item">Kelola Data</a>
+        <a href="../Admin/KelolaJamOperasional.php" class="menu-item">Kelola Jam Operasional</a>
         <a href="../Admin/Laporan.php" class="menu-item">Lihat Laporan</a>
-        <a href="../Admin/Pengaturan.php" class="menu-item">Pengaturan Sistem</a>
+        <!-- <a href="../Admin/Pengaturan.php" class="menu-item">Pengaturan Sistem</a> -->
     </div>
 
 </body>

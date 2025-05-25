@@ -97,6 +97,9 @@
     <label for="deskripsi">Deskripsi</label>
     <textarea name="deskripsi" rows="3" required></textarea>
 
+    <label for="modal">Modal</label>
+    <input type="number" name="modal" required>
+    
     <label for="harga">Harga</label>
     <input type="number" name="harga" required>
 

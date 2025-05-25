@@ -1,20 +1,23 @@
 <?php
 include '../connection.php';
 
-// Handle add user
 if (isset($_POST['add'])) {
     $name = $_POST['name'];
     $email = $_POST['email'];
     $role = $_POST['role'];
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); 
     $is_active = $_POST['is_active'];
 
-    $add_sql = "INSERT INTO users (name, email, role, is_active) VALUES ('$name', '$email', '$role', $is_active)";
-    if (mysqli_query($connect, $add_sql)) {
+    $stmt = $connect->prepare("INSERT INTO users (name, email, password, role, is_active) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssi", $name, $email, $password, $role, $is_active);
+
+    if ($stmt->execute()) {
         echo "<script>alert('User berhasil ditambahkan'); window.location.href='KelolaUsers.php';</script>";
         exit;
     } else {
-        echo "Gagal menambahkan user: " . mysqli_error($connect);
+        echo "Gagal menambahkan user: " . $stmt->error;
     }
+    $stmt->close();
 }
 
 // Handle update
@@ -160,6 +163,21 @@ if (isset($_GET['edit'])):
         </tr>
     <?php endwhile; ?>
 </table>
+
+<a href="../Pages/AdminMenu.php" style="
+  display: inline-block;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  padding: 10px 15px;
+  background-color: #6c757d;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  text-align: center;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+">Back</a>
+
 
 </body>
 </html>

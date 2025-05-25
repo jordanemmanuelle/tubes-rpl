@@ -26,6 +26,7 @@ $netTotal = 0;
 <html>
 <head>
     <title>Laporan Keuangan</title>
+    <link rel="stylesheet" href="Laporan.css">
     <style>
         table {
             border-collapse: collapse;
@@ -87,18 +88,6 @@ $netTotal = 0;
     <h2>Net Profit: Rp<?= number_format($netTotal, 0, ',', '.') ?></h2>
 
 
-<a href="../Pages/AdminMenu.php" style="
-  display: inline-block;
-  margin-top: 20px;
-  margin-bottom: 10px;
-  padding: 10px 15px;
-  background-color: #6c757d;
-  color: white;
-  text-decoration: none;
-  font-weight: 600;
-  text-align: center;
-  border-radius: 6px;
-  transition: background-color 0.3s ease;
-">Back</a>
+<a href="../Pages/AdminMenu.php">Back</a>
 </body>
 </html>

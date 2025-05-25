@@ -64,7 +64,7 @@ $result = mysqli_query($connect, $sql);
 <html>
 <head>
     <title>Kelola User</title>
-    <link rel="stylesheet" href="KelolaUsers.css">
+    <link rel="stylesheet" href="KelolaUser.css">
     <style>
         table { border-collapse: collapse; width: 100%; margin-top: 20px; }
         th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }

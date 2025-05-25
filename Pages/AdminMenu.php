@@ -11,21 +11,20 @@ if (!isset($_SESSION['id_user']) || $_SESSION['role'] !== 'admin') {
 
 <!DOCTYPE html>
 <html>
+
 <head>
+    <link rel="stylesheet" href="StyleHome.css">
     <title>Admin Menu</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            padding: 40px;
-            text-align: center;
-        }
         h1 {
             color: #333;
+            text-align: center;
         }
+
         .menu-container {
             margin-top: 30px;
         }
+
         .menu-item {
             display: block;
             margin: 10px auto;
@@ -36,28 +35,48 @@ if (!isset($_SESSION['id_user']) || $_SESSION['role'] !== 'admin') {
             text-decoration: none;
             border-radius: 8px;
         }
+
         .menu-item:hover {
             background-color: #0056b3;
         }
-        .logout {
-            margin-top: 40px;
-            color: red;
-            text-decoration: none;
-        }
+
+      
     </style>
 </head>
+
 <body>
+
+    <header>
+        <h1>Fore Coffee</h1>
+        <p>Your favorite coffee shop</p>
+    </header>
+    <nav>
+        <a href="home.php">Home</a>
+        <a href="about.php">About Us</a>
+        <a href="contact.php">Contact</a>
+        <?php if (isset($_SESSION['id_user'])): ?>
+            <a href="../LoginRegister/Logout.php">Logout</a>
+        <?php else: ?>
+            <a href="../LoginRegister/FormRegister.html">Register</a>
+            <a href="../LoginRegister/FormLogin.html">Login</a>
+            <script>
+                window.onload = function () {
+                    closeModal(); // agar pop-up tidak muncul terus-terusan
+                }
+            </script>
+        <?php endif; ?>
+    </nav>
 
     <h1>Selamat Datang, Admin <?php echo htmlspecialchars($_SESSION['name']); ?>!</h1>
 
     <div class="menu-container">
+        <a href="../Admin/FormAddMenu.php" class="menu-item">Tambah Menu</a>
         <a href="KelolaUsers.php" class="menu-item">Kelola Pengguna</a>
         <a href="KelolaData.php" class="menu-item">Kelola Data</a>
         <a href="Laporan.php" class="menu-item">Lihat Laporan</a>
         <a href="Pengaturan.php" class="menu-item">Pengaturan Sistem</a>
     </div>
 
-    <a href="../LoginRegister/Logout.php" class="logout">Logout</a>
-
 </body>
+
 </html>

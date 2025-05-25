@@ -114,7 +114,7 @@
 
     <button type="submit">Tambah Menu</button>
 
-    <a href="../Pages/Home.php" style="
+    <a href="../Pages/AdminMenu.php" style="
   display: inline-block;
   margin-top: 20px;
   margin-bottom: 10px;
@@ -126,7 +126,7 @@
   text-align: center;
   border-radius: 6px;
   transition: background-color 0.3s ease;
-">← Back to Home</a>
+">Back</a>
 
   </form>
 

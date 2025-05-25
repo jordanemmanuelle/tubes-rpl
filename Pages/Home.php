@@ -367,13 +367,18 @@ if ($conn->connect_error) {
                     jumlah
                 });
             }
-
+            saveCart();
             updateCartUI();
             closeModal();
             alert("Berhasil ditambahkan ke keranjang!");
         });
 
-        let cart = [];
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        function saveCart() {
+            localStorage.setItem("cart", JSON.stringify(cart));
+        }
+
 
         function updateCartUI() {
             const cartItemsEl = document.getElementById("cartItems");
@@ -410,6 +415,7 @@ if ($conn->connect_error) {
                 removeBtn.title = "Hapus item";
                 removeBtn.addEventListener("click", () => {
                     cart.splice(index, 1);
+                    saveCart();
                     updateCartUI();
                 });
 
@@ -446,6 +452,9 @@ if ($conn->connect_error) {
         window.onload = function () {
             closeModal();
         } // biar setiap kali refresh, popoutnya nutup
+
+        updateCartUI(); // Biar keranjang langsung tampil saat halaman dimuat
+
     </script>
 
 </body>

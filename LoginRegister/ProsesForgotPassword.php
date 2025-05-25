@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // validasi password cocok
     if ($newPassword !== $confirmPassword) {
         echo "<script>
-                alert('Password dan konfirmasi tidak sama!');
+                  alert('Password dan konfirmasi tidak sama!');
                 window.history.back();
               </script>";
         exit();

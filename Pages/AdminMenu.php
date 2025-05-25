@@ -71,10 +71,10 @@ if (!isset($_SESSION['id_user']) || $_SESSION['role'] !== 'admin') {
 
     <div class="menu-container">
         <a href="../Admin/FormAddMenu.php" class="menu-item">Tambah Menu</a>
-        <a href="KelolaUsers.php" class="menu-item">Kelola Pengguna</a>
-        <a href="KelolaData.php" class="menu-item">Kelola Data</a>
-        <a href="Laporan.php" class="menu-item">Lihat Laporan</a>
-        <a href="Pengaturan.php" class="menu-item">Pengaturan Sistem</a>
+        <a href="../Admin/KelolaUsers.php" class="menu-item">Kelola Pengguna</a>
+        <a href="../Admin/KelolaData.php" class="menu-item">Kelola Data</a>
+        <a href="../Admin/Laporan.php" class="menu-item">Lihat Laporan</a>
+        <a href="../Admin/Pengaturan.php" class="menu-item">Pengaturan Sistem</a>
     </div>
 
 </body>

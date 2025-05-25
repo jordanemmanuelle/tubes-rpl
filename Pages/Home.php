@@ -239,7 +239,7 @@ if ($conn->connect_error) {
                 while ($row = $result->fetch_assoc()):
                     ?>
                     <div class="product-card">
-                        <img src="../Menu/uploads/<?= htmlspecialchars($row['gambar']); ?>"
+                        <img src="../Admin/uploads/<?= htmlspecialchars($row['gambar']); ?>"
                             alt="<?= htmlspecialchars($row['nama_menu']); ?>" style="max-width: 100%; height: auto;">
                         <div class="product-info">
                             <h3><?= htmlspecialchars($row['nama_menu']); ?></h3>

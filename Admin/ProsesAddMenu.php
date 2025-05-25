@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->bind_param("ssisis", $nama_menu, $deskripsi, $harga, $new_file_name, $stok, $jenis);
 
             if ($stmt->execute()) {
-                echo "Menu berhasil ditambahkan! <a href='ProsesAddMenu.php'>Tambah menu lain</a>";
+                echo "Menu berhasil ditambahkan! <a href='FormAddMenu.php'>Tambah menu lain</a>";
             } else {
                 echo "Error saat menyimpan data: " . $stmt->error;
                 // Jika gagal, hapus file yang sudah terupload
@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 } else {
     echo "Metode request tidak valid.";
-    header("Location: ../Menu/FormAddMenu.php");
+    header("Location: ../Admin/FormAddMenu.php");
 }
 
 $connect->close();

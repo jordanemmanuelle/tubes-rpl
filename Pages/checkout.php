@@ -67,6 +67,7 @@ if (isset($_POST['bayar'])) {
         }
         
         unset($_SESSION['cart']);
+        
         echo "<script>
                 alert('Pembayaran berhasil!');
                 localStorage.removeItem('cart');

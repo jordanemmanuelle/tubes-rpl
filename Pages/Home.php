@@ -216,6 +216,11 @@ if ($conn->connect_error) {
         <?php else: ?>
             <a href="../LoginRegister/FormRegister.html">Register</a>
             <a href="../LoginRegister/FormLogin.html">Login</a>
+            <script>
+                window.onload = function () {
+                    closeModal(); // niar kalau direfresh ga terus2an muncul popout productnya
+                }
+            </script>
         <?php endif; ?>
     </nav>
 
@@ -261,18 +266,18 @@ if ($conn->connect_error) {
             ?>
         </section>
     </main>
-
-    <section class="cart-container" id="cartContainer">
-        <h2>Keranjang Saya</h2>
-        <ul id="cartItems">
-            <li>Keranjang kosong.</li>
-        </ul>
-        <div class="cart-total" id="cartTotal" style="display:none;">
-            Total: Rp0
-        </div>
-        <button id="buyButton" style="display:none;">Beli</button>
-    </section>
-
+    <?php if (isset($_SESSION['id_user'])): ?>
+        <section class="cart-container" id="cartContainer">
+            <h2>Keranjang Saya</h2>
+            <ul id="cartItems">
+                <li>Keranjang kosong.</li>
+            </ul>
+            <div class="cart-total" id="cartTotal" style="display:none;">
+                Total: Rp0
+            </div>
+            <button id="buyButton" style="display:none;">Beli</button>
+        </section>
+    <?php endif; ?>
     <footer>&copy; 2025 Fore Coffee. All rights reserved.</footer>
 
     <!-- Modal -->

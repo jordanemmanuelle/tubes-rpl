@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Pindahkan file ke folder upload
         if (move_uploaded_file($file_tmp, $upload_path)) {
             // Simpan data ke database
-            $stmt = $conn->prepare("INSERT INTO menu (nama_menu, deskripsi, harga, gambar, stok, jenis) VALUES (?, ?, ?, ?, ?, ?)");
+            $stmt = $connect->prepare("INSERT INTO menu (nama_menu, deskripsi, harga, gambar, stok, jenis) VALUES (?, ?, ?, ?, ?, ?)");
             $stmt->bind_param("ssisis", $nama_menu, $deskripsi, $harga, $new_file_name, $stok, $jenis);
 
             if ($stmt->execute()) {
@@ -60,5 +60,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header("Location: ../Menu/FormAddMenu.php");
 }
 
-$conn->close();
+$connect->close();
 ?>

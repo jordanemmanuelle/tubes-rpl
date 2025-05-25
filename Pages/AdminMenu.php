@@ -57,7 +57,7 @@ if (!isset($_SESSION['id_user']) || $_SESSION['role'] !== 'admin') {
         <a href="Pengaturan.php" class="menu-item">Pengaturan Sistem</a>
     </div>
 
-    <a href="../Logout.php" class="logout">Logout</a>
+    <a href="../LoginRegister/Logout.php" class="logout">Logout</a>
 
 </body>
 </html>

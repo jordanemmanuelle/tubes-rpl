@@ -25,6 +25,7 @@ if (isset($_POST['bayar'])) {
     if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
         echo "<script>alert('Keranjang masih kosong!');</script>";
     } else {
+       
         $id_user = $_SESSION['id_user'] ?? 1;
         $total = 0;
 
@@ -43,7 +44,7 @@ if (isset($_POST['bayar'])) {
 
             $total += $item['harga'] * $qty;
         }
-
+        
         // 2. Insert ke transaksi
         $tanggal = date('Y-m-d H:i:s');
         $query = "INSERT INTO transaksi (id_user, total, tanggal) VALUES ('$id_user', '$total', '$tanggal')";
@@ -66,6 +67,13 @@ if (isset($_POST['bayar'])) {
         }
         
         unset($_SESSION['cart']);
+        echo "<script>
+                alert('Pembayaran berhasil!');
+                localStorage.removeItem('cart');
+                window.location='Home.php';
+              </script>";
+        exit;
+         
         echo "<script>alert('Pembayaran berhasil!'); window.location='Home.php';</script>";
         exit;
     }

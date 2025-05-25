@@ -20,6 +20,7 @@ $result = mysqli_query($connect, $sql);
 
 // Hitung total pendapatan
 $total = 0;
+$netTotal = 0;
 ?>
 <!DOCTYPE html>
 <html>

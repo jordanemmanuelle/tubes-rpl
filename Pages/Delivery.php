@@ -97,6 +97,7 @@ if (isset($_POST['konfirmasi'])) {
 <html>
 <head>
     <title>Ringkasan Pengiriman - Fore Coffee</title>
+    <link rel="stylesheet" href="Delivery.css">
 </head>
 <body>
     <h1>Ringkasan Pengiriman</h1>

@@ -47,6 +47,7 @@ mysqli_stmt_close($stmt);
 <html>
 <head>
     <title>Orderan Kurir</title>
+    <link rel="stylesheet" href="OrderanKurir.css">
 </head>
 <body>
     <h2>Selamat datang, Kurir <?= $nama_kurir ?></h2>

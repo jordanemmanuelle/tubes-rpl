@@ -32,6 +32,7 @@ mysqli_stmt_close($stmt);
 <html>
 <head>
     <title>Riwayat Pengiriman Kurir</title>
+    <link rel="stylesheet" href="HistoryKurir.css">
 </head>
 <body>
     <h2>Riwayat Pengiriman - <?= htmlspecialchars($_SESSION['nama_kurir']) ?></h2>

@@ -13,7 +13,7 @@ if (!isset($_SESSION['id_user']) || $_SESSION['role'] !== 'admin') {
 <html>
 
 <head>
-    <link rel="stylesheet" href="StyleHome.css">
+    <link rel="stylesheet" href="../Pages/StyleHome.css">
     <title>Admin Menu</title>
     <style>
         h1 {

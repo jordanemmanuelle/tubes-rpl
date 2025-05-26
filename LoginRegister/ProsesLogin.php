@@ -38,7 +38,7 @@ if (mysqli_num_rows($result_user) === 1) {
     $_SESSION['role'] = $user['role'];
 
     if ($user['role'] === 'admin') {
-        header("Location: ../Pages/AdminMenu.php");
+        header("Location: ../Admin/AdminMenu.php");
     } else {
         header("Location: ../Pages/Home.php");
     }

@@ -228,7 +228,20 @@ if (isset($_GET['edit'])):
     </tbody>
 </table>
 
-<a href="../Pages/AdminMenu.php">Back</a>
+<a href="AdminMenu.php" style="
+  display: inline-block;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  padding: 10px 15px;
+  background-color: #6c757d;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  text-align: center;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+">Back</a>
+
 
 </body>
 </html>

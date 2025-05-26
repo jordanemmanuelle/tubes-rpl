@@ -5,7 +5,7 @@ if (isset($_POST['add'])) {
     $name = $_POST['name'];
     $email = $_POST['email'];
     $role = $_POST['role'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); 
+    $password = md5($_POST['password']); // md5 hashing
     $is_active = $_POST['is_active'];
 
     $stmt = $connect->prepare("INSERT INTO users (name, email, password, role, is_active) VALUES (?, ?, ?, ?, ?)");
@@ -28,12 +28,24 @@ if (isset($_POST['update'])) {
     $role = $_POST['role'];
     $is_active = $_POST['is_active'];
 
-    $update_sql = "UPDATE users SET 
-        name = '$name',
-        email = '$email',
-        role = '$role',
-        is_active = $is_active
-        WHERE id_user = $id";
+    $password = isset($_POST['password']) && !empty($_POST['password']) ? md5($_POST['password']) : null;
+
+    if ($password) {
+        $update_sql = "UPDATE users SET 
+            name = '$name',
+            email = '$email',
+            password = '$password',
+            role = '$role',
+            is_active = $is_active
+            WHERE id_user = $id";
+    } else {
+        $update_sql = "UPDATE users SET 
+            name = '$name',
+            email = '$email',
+            role = '$role',
+            is_active = $is_active
+            WHERE id_user = $id";
+    }
 
     if (mysqli_query($connect, $update_sql)) {
         echo "<script>alert('User berhasil diupdate'); window.location.href='KelolaUsers.php';</script>";
@@ -86,6 +98,9 @@ $result = mysqli_query($connect, $sql);
     <label>Email:</label><br>
     <input type="email" name="email" required><br><br>
 
+    <label>Password:</label><br>
+    <input type="password" name="password" required><br><br>
+
     <label>Role:</label><br>
     <select name="role">
         <option value="user">User</option>
@@ -115,11 +130,15 @@ if (isset($_GET['edit'])):
 <h3>Edit User</h3>
 <form method="POST">
     <input type="hidden" name="id_user" value="<?= $user['id_user'] ?>">
+    
     <label>Nama:</label><br>
     <input type="text" name="name" value="<?= htmlspecialchars($user['name']) ?>" required><br><br>
 
     <label>Email:</label><br>
     <input type="email" name="email" value="<?= htmlspecialchars($user['email']) ?>" required><br><br>
+
+    <label>Password (kosong = ga ngubah):</label><br>
+    <input type="password" name="password"><br><br>
 
     <label>Role:</label><br>
     <select name="role">
@@ -165,7 +184,7 @@ if (isset($_GET['edit'])):
     <?php endwhile; ?>
 </table>
 
-<a href="../Pages/AdminMenu.php" style="
+<a href="AdminMenu.php" style="
   display: inline-block;
   margin-top: 20px;
   margin-bottom: 10px;
@@ -178,7 +197,6 @@ if (isset($_GET['edit'])):
   border-radius: 6px;
   transition: background-color 0.3s ease;
 ">Back</a>
-
 
 </body>
 </html>

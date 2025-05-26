@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,11 +17,20 @@
     </header>
 
     <nav>
-        <a href="Home.php">Home</a>
-        <a href="About.php">About Us</a>
-        <a href="Contact.php">Contact</a>
-        <a href="../LoginRegister/FormLogin.html">Login</a>
-        <a href="../LoginRegister/FormRegister.html">Register</a>
+        <a href="home.php">Home</a>
+        <a href="about.php">About Us</a>
+        <a href="contact.php">Contact</a>
+        <?php if (isset($_SESSION['id_user'])): ?>
+            <a href="../LoginRegister/Logout.php">Logout</a>
+        <?php else: ?>
+            <a href="../LoginRegister/FormRegister.html">Register</a>
+            <a href="../LoginRegister/FormLogin.html">Login</a>
+            <script>
+                window.onload = function () {
+                    closeModal(); // niar kalau direfresh ga terus2an muncul popout productnya
+                }
+            </script>
+        <?php endif; ?>
     </nav>
 
     <div class="about-container">

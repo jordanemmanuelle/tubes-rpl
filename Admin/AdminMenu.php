@@ -13,7 +13,7 @@ if (!isset($_SESSION['id_user']) || $_SESSION['role'] !== 'admin') {
 <html>
 
 <head>
-    <link rel="stylesheet" href="StyleHome.css">
+    <link rel="stylesheet" href="../Pages/StyleHome.css">
     <title>Admin Menu</title>
     <style>
         h1 {
@@ -50,22 +50,7 @@ if (!isset($_SESSION['id_user']) || $_SESSION['role'] !== 'admin') {
         <h1>Fore Coffee</h1>
         <p>Your favorite coffee shop</p>
     </header>
-    <nav>
-        <a href="home.php">Home</a>
-        <a href="about.php">About Us</a>
-        <a href="contact.php">Contact</a>
-        <?php if (isset($_SESSION['id_user'])): ?>
-            <a href="../LoginRegister/Logout.php">Logout</a>
-        <?php else: ?>
-            <a href="../LoginRegister/FormRegister.html">Register</a>
-            <a href="../LoginRegister/FormLogin.html">Login</a>
-            <script>
-                window.onload = function () {
-                    closeModal(); // agar pop-up tidak muncul terus-terusan
-                }
-            </script>
-        <?php endif; ?>
-    </nav>
+
 
     <h1>Selamat Datang, Admin <?php echo htmlspecialchars($_SESSION['name']); ?>!</h1>
 
@@ -77,6 +62,23 @@ if (!isset($_SESSION['id_user']) || $_SESSION['role'] !== 'admin') {
         <a href="../Admin/Kurir.php" class="menu-item">Kurir</a>
         <!-- <a href="../Admin/Pengaturan.php" class="menu-item">Pengaturan Sistem</a> -->
     </div>
+
+
+    <a href="../Pages/Home.php" style="
+  display: inline-block;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  padding: 10px 15px;
+  background-color: #6c757d;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  text-align: center;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+">Go to Login Page</a>
+
+
 
 </body>
 

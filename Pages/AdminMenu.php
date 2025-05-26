@@ -74,6 +74,7 @@ if (!isset($_SESSION['id_user']) || $_SESSION['role'] !== 'admin') {
         <a href="../Admin/KelolaUsers.php" class="menu-item">Kelola Pengguna</a>
         <a href="../Admin/KelolaJamOperasional.php" class="menu-item">Kelola Jam Operasional</a>
         <a href="../Admin/Laporan.php" class="menu-item">Lihat Laporan</a>
+        <a href="../Admin/Kurir.php" class="menu-item">Kurir</a>
         <!-- <a href="../Admin/Pengaturan.php" class="menu-item">Pengaturan Sistem</a> -->
     </div>
 

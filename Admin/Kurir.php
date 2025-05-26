@@ -39,6 +39,7 @@
 <html>
 <head>
     <title>Tambah Kurir - Admin</title>
+    <link rel="stylesheet" href="Kurir.css">
     <style>
         table, th, td {
             border: 1px solid #333;
@@ -62,7 +63,7 @@
     </style>
 </head>
 <body>
-
+    
     <h2 class="center">Tambah Kurir Baru</h2>
 
     <form method="post" action="">

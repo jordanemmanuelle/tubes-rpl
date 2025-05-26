@@ -14,6 +14,8 @@ $metode = $_SESSION['metode'];
 $kurir = $_SESSION['kurir'];
 $biaya_kurir = (float)$kurir['biaya']; // Pastikan numerik
 
+//MASALAH ADA DI TOTAL
+
 // Proses form konfirmasi dan simpan transaksi
 if (isset($_POST['konfirmasi'])) {
     $nama_penerima = trim($_POST['nama_penerima'] ?? '');
@@ -121,10 +123,13 @@ if (isset($_POST['konfirmasi'])) {
                 <td>Rp<?= number_format($item['harga'] * $item['qty'], 0, ',', '.') ?></td>
             </tr>
         <?php endforeach; ?>
-        <tr>
-            <td colspan="3"><strong>Total Harga (termasuk kurir)</strong></td>
-            <td><strong>Rp<?= number_format($total + $biaya_kurir, 0, ',', '.') ?></strong></td>
-        </tr>
+  <tr>
+    <td colspan="3"><strong>Total Harga (termasuk kurir)</strong><br>
+
+</td>
+    <td><strong>Rp<?= number_format($total + $biaya_kurir, 0, ',', '.') ?></strong></td>
+</tr>
+
     </table>
 
     <h2>Masukkan Data Pengiriman</h2>

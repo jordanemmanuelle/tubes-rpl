@@ -62,10 +62,7 @@ if (isset($_POST['bayar'])) {
                 echo "<script>alert('Maaf, tidak ada kurir yang tersedia saat ini. Silakan pilih Pick Up.'); window.location='Checkout.php';</script>";
                 exit;
             }
-
-            // Tambahkan biaya kurir ke total
-            $total += $kurir['biaya'];
-
+            
             // Simpan data transaksi sementara ke session untuk halaman selanjutnya
             $_SESSION['kurir'] = $kurir;
             $_SESSION['total'] = $total;

@@ -25,11 +25,10 @@ if (isset($_POST['bayar'])) {
     if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
         echo "<script>alert('Keranjang masih kosong!');</script>";
     } else {
-       
         $id_user = $_SESSION['id_user'] ?? 1;
         $total = 0;
 
-        // 1. Cek stok cukup
+        // Hitung total dan cek stok
         foreach ($_SESSION['cart'] as $item) {
             $id_menu = $item['id'];
             $qty = $item['qty'];
@@ -44,42 +43,60 @@ if (isset($_POST['bayar'])) {
 
             $total += $item['harga'] * $qty;
         }
-        
-        // 2. Insert ke transaksi
-        $tanggal = date('Y-m-d H:i:s');
-        $query = "INSERT INTO transaksi (id_user, total, tanggal) VALUES ('$id_user', '$total', '$tanggal')";
-        mysqli_query($connect, $query);
-        $id_transaksi = mysqli_insert_id($connect);
 
-        // 3. Insert ke detail_transaksi + kurangi stok
-        foreach ($_SESSION['cart'] as $item) {
-            $id_menu = $item['id'];
-            $qty = $item['qty'];
-            $harga = $item['harga'];
+        // Ambil metode pengambilan dari form
+        $metode = $_POST['metode'] ?? 'Pick Up';
 
-            // Insert detail
-            $query_detail = "INSERT INTO detail_transaksi (id_transaksi, id_produk, jumlah, harga) 
-                             VALUES ('$id_transaksi', '$id_menu', '$qty', '$harga')";
-            mysqli_query($connect, $query_detail);
+        if ($metode === 'Delivery') {
+            // Cari kurir yang available
+            $kurirResult = mysqli_query($connect, "SELECT * FROM kurir WHERE status = 'available' LIMIT 1");
+            $kurir = mysqli_fetch_assoc($kurirResult);
 
-            // Kurangi stok
-            mysqli_query($connect, "UPDATE menu SET stok = stok - $qty WHERE id_menu = '$id_menu'");
+            if (!$kurir) {
+                echo "<script>alert('Maaf, tidak ada kurir yang tersedia saat ini. Silakan pilih Pick Up.'); window.location='Checkout.php';</script>";
+                exit;
+            }
+
+            // Simpan data transaksi sementara ke session untuk halaman selanjutnya
+            $_SESSION['kurir'] = $kurir;
+            $_SESSION['total'] = $total;
+            $_SESSION['metode'] = $metode;
+
+            header("Location: Delivery.php");
+            exit;
+        } else {
+            // Pick Up
+            $tanggal = date('Y-m-d H:i:s');
+            $query = "INSERT INTO transaksi (id_user, total, tanggal, metode_pengambilan) VALUES ('$id_user', '$total', '$tanggal', 'Pick Up')";
+            mysqli_query($connect, $query);
+            $id_transaksi = mysqli_insert_id($connect);
+
+            foreach ($_SESSION['cart'] as $item) {
+                $id_menu = $item['id'];
+                $qty = $item['qty'];
+                $harga = $item['harga'];
+
+                $query_detail = "INSERT INTO detail_transaksi (id_transaksi, id_produk, jumlah, harga) 
+                                 VALUES ('$id_transaksi', '$id_menu', '$qty', '$harga')";
+                mysqli_query($connect, $query_detail);
+
+                mysqli_query($connect, "UPDATE menu SET stok = stok - $qty WHERE id_menu = '$id_menu'");
+            }
+
+            unset($_SESSION['cart']);
+            unset($_SESSION['kurir']);
+            unset($_SESSION['total']);
+            unset($_SESSION['metode']);
+
+            echo "<script>
+                    alert('Pembayaran berhasil! Terima kasih telah memilih Pick Up.');
+                    localStorage.removeItem('cart');
+                    window.location='Home.php';
+                  </script>";
+            exit;
         }
-        
-        unset($_SESSION['cart']);
-        
-        echo "<script>
-                alert('Pembayaran berhasil!');
-                localStorage.removeItem('cart');
-                window.location='Home.php';
-              </script>";
-        exit;
-         
-        echo "<script>alert('Pembayaran berhasil!'); window.location='Home.php';</script>";
-        exit;
     }
 }
-
 
 // Ambil cart dari session
 $cart = $_SESSION['cart'] ?? [];
@@ -130,11 +147,18 @@ foreach ($cart as $item) {
 
     <!-- Tombol Bayar -->
     <form method="post" action="Checkout.php" style="margin-top: 20px;">
-        <button type="submit" name="bayar" class="btn btn-success">Bayar Sekarang</button>
-    </form>
+        <p><strong>Pilih Metode Pengambilan:</strong></p>
+        <label>
+            <input type="radio" name="metode" value="Delivery" required> Delivery
+        </label>
+        <label style="margin-left: 20px;">
+            <input type="radio" name="metode" value="Pick Up"> Pick Up
+        </label>
 
-    <p>Terima kasih telah berbelanja di Fore Coffee.</p>
-    <p><a href="home.php">Kembali ke Home</a></p>
+        <br><br>
+        <button type="submit" name="bayar" class="btn btn-success">Bayar</button>
+    </form>
+    <p><a href="home.php">Back</a></p>
 
 </body>
 

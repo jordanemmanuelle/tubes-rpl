@@ -34,6 +34,9 @@ if (isset($_POST['bayar'])) {
             $qty = $item['qty'];
 
             $result = mysqli_query($connect, "SELECT stok FROM menu WHERE id_menu = '$id_menu'");
+            if (!$result) {
+                die("Query error: " . mysqli_error($connect));
+            }
             $data = mysqli_fetch_assoc($result);
 
             if (!$data || $data['stok'] < $qty) {
@@ -50,12 +53,18 @@ if (isset($_POST['bayar'])) {
         if ($metode === 'Delivery') {
             // Cari kurir yang available
             $kurirResult = mysqli_query($connect, "SELECT * FROM kurir WHERE status = 'available' LIMIT 1");
+            if (!$kurirResult) {
+                die("Query error: " . mysqli_error($connect));
+            }
             $kurir = mysqli_fetch_assoc($kurirResult);
 
             if (!$kurir) {
                 echo "<script>alert('Maaf, tidak ada kurir yang tersedia saat ini. Silakan pilih Pick Up.'); window.location='Checkout.php';</script>";
                 exit;
             }
+
+            // Tambahkan biaya kurir ke total
+            $total += $kurir['biaya'];
 
             // Simpan data transaksi sementara ke session untuk halaman selanjutnya
             $_SESSION['kurir'] = $kurir;
@@ -67,8 +76,11 @@ if (isset($_POST['bayar'])) {
         } else {
             // Pick Up
             $tanggal = date('Y-m-d H:i:s');
-            $query = "INSERT INTO transaksi (id_user, total, tanggal, metode_pengambilan) VALUES ('$id_user', '$total', '$tanggal', 'Pick Up')";
-            mysqli_query($connect, $query);
+            $query = "INSERT INTO transaksi (id_user, total, tanggal, metode_pengambilan) 
+                      VALUES ('$id_user', '$total', '$tanggal', 'Pick Up')";
+            if (!mysqli_query($connect, $query)) {
+                die("Error insert transaksi: " . mysqli_error($connect));
+            }
             $id_transaksi = mysqli_insert_id($connect);
 
             foreach ($_SESSION['cart'] as $item) {
@@ -78,9 +90,13 @@ if (isset($_POST['bayar'])) {
 
                 $query_detail = "INSERT INTO detail_transaksi (id_transaksi, id_produk, jumlah, harga) 
                                  VALUES ('$id_transaksi', '$id_menu', '$qty', '$harga')";
-                mysqli_query($connect, $query_detail);
+                if (!mysqli_query($connect, $query_detail)) {
+                    die("Error insert detail transaksi: " . mysqli_error($connect));
+                }
 
-                mysqli_query($connect, "UPDATE menu SET stok = stok - $qty WHERE id_menu = '$id_menu'");
+                if (!mysqli_query($connect, "UPDATE menu SET stok = stok - $qty WHERE id_menu = '$id_menu'")) {
+                    die("Error update stok: " . mysqli_error($connect));
+                }
             }
 
             unset($_SESSION['cart']);
@@ -113,7 +129,7 @@ foreach ($cart as $item) {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Checkout - Fore Coffee</title>
-    <link rel="stylesheet" href="Checkout.css">
+    <link rel="stylesheet" href="Checkout.css" />
 </head>
 
 <body>
@@ -155,7 +171,7 @@ foreach ($cart as $item) {
             <input type="radio" name="metode" value="Pick Up"> Pick Up
         </label>
 
-        <br><br>
+        <br /><br />
         <button type="submit" name="bayar" class="btn btn-success">Bayar</button>
     </form>
     <p><a href="home.php">Back</a></p>

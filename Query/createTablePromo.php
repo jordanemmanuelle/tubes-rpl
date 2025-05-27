@@ -1,5 +1,10 @@
-CREATE TABLE promo (
-    id_promo INT PRIMARY KEY AUTO_INCREMENT,
+<?php
+include 'connection.php';
+
+// 1. Buat tabel promo
+$sql_create = "
+CREATE TABLE IF NOT EXISTS promo (
+    id_promo INT AUTO_INCREMENT PRIMARY KEY,
     nama_promo VARCHAR(100),
     deskripsi TEXT,
     kode_promo VARCHAR(50),
@@ -9,8 +14,16 @@ CREATE TABLE promo (
     tanggal_mulai DATE,
     tanggal_berakhir DATE,
     aktif BOOLEAN
-);
+)";
 
+if ($conn->query($sql_create) === TRUE) {
+    echo "Tabel 'promo' berhasil dibuat.<br>";
+} else {
+    echo "Gagal membuat tabel: " . $conn->error;
+}
+
+// 2. Insert 1 data dummy
+$sql_insert = "
 INSERT INTO promo (
     nama_promo,
     deskripsi,
@@ -31,4 +44,13 @@ INSERT INTO promo (
     '2025-05-27',
     '2025-09-27',
     1
-);
+)";
+
+if ($conn->query($sql_insert) === TRUE) {
+    echo "Data promo berhasil ditambahkan.";
+} else {
+    echo "Gagal menambahkan data: " . $conn->error;
+}
+
+$conn->close();
+?>

@@ -1,6 +1,7 @@
 <?php
 include '../connection.php';
 
+// 1. Buat tabel transaksi jika belum ada
 $sqlCreate = "CREATE TABLE IF NOT EXISTS transaksi (
     id_transaksi INT AUTO_INCREMENT PRIMARY KEY,
     id_user INT NOT NULL,
@@ -36,12 +37,10 @@ $sqlCheckKurir = "SHOW COLUMNS FROM transaksi LIKE 'id_kurir'";
 $resultKurir = mysqli_query($connect, $sqlCheckKurir);
 
 if (mysqli_num_rows($resultKurir) == 0) {
-    // Tambah kolom id_kurir dan buat foreign key-nya
     $sqlAddKurir = "ALTER TABLE transaksi 
         ADD id_kurir INT NULL,
         ADD CONSTRAINT fk_transaksi_kurir FOREIGN KEY (id_kurir) REFERENCES kurir(id_kurir)";
     if (mysqli_multi_query($connect, $sqlAddKurir)) {
-        // Karena multi query, kita perlu consume results
         do {
             if ($res = mysqli_store_result($connect)) {
                 mysqli_free_result($res);
@@ -70,6 +69,29 @@ if (mysqli_num_rows($resultStatus) == 0) {
     }
 } else {
     echo "Kolom status sudah ada.<br>";
+}
+
+// 5. Cek dan tambahkan kolom id_promo jika belum ada
+$sqlCheckPromo = "SHOW COLUMNS FROM transaksi LIKE 'id_promo'";
+$resultPromo = mysqli_query($connect, $sqlCheckPromo);
+
+if (mysqli_num_rows($resultPromo) == 0) {
+    $sqlAddPromo = "ALTER TABLE transaksi 
+        ADD id_promo INT NULL,
+        ADD CONSTRAINT fk_transaksi_promo FOREIGN KEY (id_promo) REFERENCES promo(id_promo)";
+    if (mysqli_multi_query($connect, $sqlAddPromo)) {
+        do {
+            if ($res = mysqli_store_result($connect)) {
+                mysqli_free_result($res);
+            }
+        } while (mysqli_more_results($connect) && mysqli_next_result($connect));
+        
+        echo "Kolom id_promo dan foreign key berhasil ditambahkan.<br>";
+    } else {
+        echo "Error saat menambahkan kolom id_promo atau foreign key: " . mysqli_error($connect) . "<br>";
+    }
+} else {
+    echo "Kolom id_promo sudah ada.<br>";
 }
 
 ?>

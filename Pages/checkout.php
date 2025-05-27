@@ -132,7 +132,7 @@ if (isset($_POST['bayar'])) {
                 $qty = $item['qty'];
                 $harga = $item['harga'];
 
-                $query_detail = "INSERT INTO detail_transaksi (id_transaksi, id_produk, jumlah, harga) 
+                $query_detail = "INSERT INTO detail_transaksi (id_transaksi, id_menu, jumlah, harga) 
                                  VALUES ('$id_transaksi', '$id_menu', '$qty', '$harga')";
                 if (!mysqli_query($connect, $query_detail)) {
                     die("Error insert detail transaksi: " . mysqli_error($connect));

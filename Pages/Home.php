@@ -209,6 +209,7 @@ if ($conn->connect_error) {
 
     <nav>
         <a href="home.php">Home</a>
+        <a href="HistoryPesanan.php">History Pesanan</a>
         <a href="about.php">About Us</a>
         <a href="contact.php">Contact</a>
         <?php if (isset($_SESSION['id_user'])): ?>

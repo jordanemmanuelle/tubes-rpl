@@ -143,7 +143,7 @@
                     <td>Rp<?= number_format($item['harga'], 0, ',', '.') ?></td>
                     <td>Rp<?= number_format($item['harga'] * $item['qty'], 0, ',', '.') ?></td>
                     
-                    <td><?= htmlspecialchars($promo['nilai_diskon']) ?></td>
+                    <td><?= (is_array($promo) && isset($promo['nilai_diskon'])) ? htmlspecialchars($promo['nilai_diskon']) : '-' ?></td>
                 </tr>
             <?php endforeach; ?>
             <tr>

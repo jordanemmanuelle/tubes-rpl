@@ -156,7 +156,12 @@ if (isset($_GET['edit'])):
         <a href="KelolaMenu.php" class="btn btn-back">Batal</a>
     </form>
 <?php else: ?>
-    <h3>Tambah Menu</h3>
+    <h3 style ="color: #007BFF;
+    font-size: 20px;
+    font-weight: 700;
+    margin-top: 30px;
+    margin-bottom: 18px;
+    text-align: center;">Tambah Menu</h3>
     <form action="ProsesAddMenu.php" method="POST" enctype="multipart/form-data">
         <label for="nama_menu">Nama Menu</label>
         <input type="text" name="nama_menu" required>

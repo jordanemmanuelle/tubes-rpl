@@ -141,8 +141,9 @@ if (isset($_POST['konfirmasi'])) {
         <label for="alamat_penerima">Alamat Penerima:</label><br>
         <textarea id="alamat_penerima" name="alamat_penerima" rows="3" required></textarea><br><br>
 
-        <button type="submit" name="konfirmasi">Konfirmasi dan Bayar</button>
-        <a href="Checkout.php" style="margin-left: 10px;">Kembali ke Checkout</a>
+        <button type="submit" name="konfirmasi" class="btn-main">Konfirmasi dan Bayar</button>
+        <a href="checkout.php" class="btn-main" style="display: block; background: #003366; color: #fff; text-decoration: none; padding: 12px 0; border-radius: 8px; font-weight: 700; text-align: center; margin-top: 16px;">Kembali ke Checkout</a>
+
     </form>
 </body>
 </html>

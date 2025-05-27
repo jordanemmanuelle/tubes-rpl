@@ -79,5 +79,6 @@ mysqli_stmt_close($stmt);
     </form>
 
     <br><a href="HistoryKurir.php">Lihat Riwayat Pengantaran</a>
+    <a href="../LoginRegister/Logout.php"> Logout </a>
 </body>
 </html>

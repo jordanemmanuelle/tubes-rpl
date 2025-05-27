@@ -32,14 +32,15 @@
             $total_dengan_kurir = $total + $biaya_kurir;
 
             // Simpan ke tabel transaksi
-            $query = "INSERT INTO transaksi (id_user, total, tanggal, metode_pengambilan, id_kurir) 
-            VALUES (?, ?, ?, ?, ?)";
+            $query = "INSERT INTO transaksi (id_user, total, tanggal, metode_pengambilan, id_kurir, id_promo) 
+            VALUES (?, ?, ?, ?, ?,?)";
   
   $stmt = mysqli_prepare($connect, $query);
   if (!$stmt) {
       die("QUERY PREPARE FAILED: " . mysqli_error($connect));
   }
-            mysqli_stmt_bind_param($stmt, "idssi", $id_user, $total_dengan_kurir, $tanggal, $metode, $id_kurir);
+  $promo_id = is_array($promo) ? $promo['id_promo'] : null;
+            mysqli_stmt_bind_param($stmt, "idssii", $id_user, $total_dengan_kurir, $tanggal, $metode, $id_kurir, $promo_id);
             if (!mysqli_stmt_execute($stmt)) {
                 die("Error insert transaksi: " . mysqli_error($connect));
             }
@@ -62,7 +63,7 @@
                 VALUES (?, ?, ?, ?, ?, ?, ?)";
 
                 $stmt = mysqli_prepare($connect, $query_detail);
-                $promo_id = is_array($promo) ? $promo['id_promo'] : null;
+               
                 mysqli_stmt_bind_param($stmt, "iiidssi", $id_transaksi, $id_menu, $qty, $total_dengan_kurir, $nama_penerima, $alamat_penerima, $promo_id);
                 
                 if (!mysqli_stmt_execute($stmt)) {

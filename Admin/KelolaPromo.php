@@ -78,6 +78,7 @@ $result = mysqli_query($connect, $sql);
         .btn-delete { color: red; }
         .btn-edit { color: blue; }
     </style>
+    <link rel="stylesheet" href="KelolaPromo.css">
 </head>
 <body>
 
@@ -216,17 +217,19 @@ if (isset($_GET['edit'])):
 </table>
 
 <a href="AdminMenu.php" style="
-  display: inline-block;
-  margin-top: 20px;
-  margin-bottom: 10px;
-  padding: 10px 15px;
-  background-color: #6c757d;
+  display: block;
+  width: 120px;
+  margin: 30px auto 20px auto;
+  padding: 12px 0;
+  background: #6c757d;
   color: white;
   text-decoration: none;
   font-weight: 600;
   text-align: center;
-  border-radius: 6px;
-  transition: background-color 0.3s ease;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: background 0.3s;
+  box-shadow: 0 2px 6px rgba(108,117,125,0.08);
 ">Back</a>
 
 </body>

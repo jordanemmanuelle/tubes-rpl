@@ -330,7 +330,7 @@ if ($conn->connect_error) {
         }
         function openModal(menu) {
             console.log("openModal called", menu); // debug
-            document.getElementById("modalImage").src = "../Menu/uploads/" + menu.gambar;
+            document.getElementById("modalImage").src = "../Admin/uploads/" + menu.gambar;
             document.getElementById("modalName").textContent = menu.nama_menu;
             document.getElementById("modalDescription").textContent = menu.deskripsi;
             document.getElementById("modalJenis").textContent = menu.jenis;

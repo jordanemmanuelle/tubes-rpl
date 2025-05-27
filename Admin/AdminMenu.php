@@ -36,7 +36,7 @@ if (!isset($_SESSION['id_user']) || $_SESSION['role'] !== 'admin') {
         <!-- <a href="../Admin/Pengaturan.php" class="menu-item">Pengaturan Sistem</a> -->
     </div>
 
-    <a href="../Page/Home.php">Go to Login Page</a>
+    <a href="../Pages/Home.php">Go to Login Page</a>
 
 </body>
 

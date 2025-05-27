@@ -6,13 +6,13 @@ $sql = "SELECT
             t.tanggal,
             m.nama_menu,
             dt.jumlah,
-            dt.harga,
+            m.harga,
             m.modal,
-            (dt.jumlah * dt.harga) AS subtotal,
-            (dt.jumlah * (dt.harga - m.modal)) AS net_profit
+            (dt.jumlah * m.harga) AS subtotal,
+            (dt.jumlah * (m.harga - m.modal)) AS net_profit
         FROM detail_transaksi dt
         JOIN transaksi t ON dt.id_transaksi = t.id_transaksi
-        JOIN menu m ON dt.id_produk = m.id_menu
+        JOIN menu m ON dt.id_menu = m.id_menu
         ORDER BY t.tanggal DESC";
 
 
@@ -71,7 +71,9 @@ $netTotal = 0;
                 <td><?= htmlspecialchars($row['tanggal']) ?></td>
                 <td><?= htmlspecialchars($row['nama_menu']) ?></td>
                 <td><?= $row['jumlah'] ?></td>
+                
                 <td>Rp<?= number_format($row['harga'], 0, ',', '.') ?></td>
+
                 <td>Rp<?= number_format($row['modal'] * $row['jumlah'], 0, ',', '.') ?></td>
                 <td>Rp<?= number_format($row['subtotal'], 0, ',', '.') ?></td>
                 <td>Rp<?= number_format($row['net_profit'], 0, ',', '.') ?></td>

@@ -58,7 +58,7 @@
                 $id_menu = $item['id'];
                 $qty = $item['qty'];
 
-                $query_detail = "INSERT INTO detail_transaksi (id_transaksi, id_produk, jumlah, harga, nama_penerima, alamat_penerima, id_promo) 
+                $query_detail = "INSERT INTO detail_transaksi (id_transaksi, id_menu, jumlah, harga, nama_penerima, alamat_penerima, id_promo) 
                 VALUES (?, ?, ?, ?, ?, ?, ?)";
 
                 $stmt = mysqli_prepare($connect, $query_detail);

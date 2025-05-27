@@ -225,12 +225,13 @@ if (isset($_POST['bayar'])) {
         <label>
             <input type="radio" name="metode" value="Delivery" required> Delivery
         </label>
-        <label style="margin-left: 20px;">
+        <label>
             <input type="radio" name="metode" value="Pick Up"> Pick Up
         </label>
 
         <br /><br />
-        <button type="submit" name="bayar" class="btn btn-success">Bayar</button>
+        <button type="submit" name="bayar" class="btn-main">Bayar</button>
+        <a href="home.php" class="btn-main">Back</a>
     </form>
 
     <p><a href="home.php">Back</a></p>

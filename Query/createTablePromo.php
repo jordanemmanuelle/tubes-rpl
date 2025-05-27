@@ -1,5 +1,5 @@
 <?php
-include 'connection.php';
+include '../connection.php';
 
 // 1. Buat tabel promo
 $sql_create = "
@@ -13,13 +13,13 @@ CREATE TABLE IF NOT EXISTS promo (
     minimal_transaksi DECIMAL(10,2),
     tanggal_mulai DATE,
     tanggal_berakhir DATE,
-    aktif BOOLEAN
+    aktif BOOLEAN 
 )";
 
-if ($conn->query($sql_create) === TRUE) {
+if ($connect->query($sql_create) === TRUE) {
     echo "Tabel 'promo' berhasil dibuat.<br>";
 } else {
-    echo "Gagal membuat tabel: " . $conn->error;
+    echo "Gagal membuat tabel: " . $connect->error;
 }
 
 // 2. Insert 1 data dummy
@@ -46,11 +46,11 @@ INSERT INTO promo (
     1
 )";
 
-if ($conn->query($sql_insert) === TRUE) {
+if ($connect->query($sql_insert) === TRUE) {
     echo "Data promo berhasil ditambahkan.";
 } else {
-    echo "Gagal menambahkan data: " . $conn->error;
+    echo "Gagal menambahkan data: " . $connect->error;
 }
 
-$conn->close();
+$connect->close();
 ?>

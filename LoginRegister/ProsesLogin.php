@@ -45,19 +45,19 @@ if (mysqli_num_rows($result_user) === 1) {
     exit();
 }
 
-// // Login sebagai kurir
-// $sql_kurir = "SELECT * FROM kurir WHERE email = '$email' AND password = '$hashed_password'";
-// $result_kurir = mysqli_query($connect, $sql_kurir);
+// Login sebagai kurir
+$sql_kurir = "SELECT * FROM kurir WHERE email = '$email' AND password = '$hashed_password'";
+$result_kurir = mysqli_query($connect, $sql_kurir);
 
-// if (mysqli_num_rows($result_kurir) === 1) {
-//     $kurir = mysqli_fetch_assoc($result_kurir);
-//     $_SESSION['id_kurir'] = $kurir['id_kurir'];
-//     $_SESSION['nama_kurir'] = $kurir['nama_kurir'];
-//     $_SESSION['role'] = 'kurir';
+if (mysqli_num_rows($result_kurir) === 1) {
+    $kurir = mysqli_fetch_assoc($result_kurir);
+    $_SESSION['id_kurir'] = $kurir['id_kurir'];
+    $_SESSION['nama_kurir'] = $kurir['nama_kurir'];
+    $_SESSION['role'] = 'kurir';
 
-//     header("Location: ../Pages/OrderanKurir.php"); // ⬅ Halaman khusus kurir
-//     exit();
-// }
+    header("Location: ../Pages/OrderanKurir.php"); // ⬅ Halaman khusus kurir
+    exit();
+}
 
 // Jika tidak ditemukan
 echo ("<script>

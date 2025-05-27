@@ -3,6 +3,9 @@ include '../connection.php';
 
 // Ambil data laporan gabungan dari detail_transaksi, transaksi, dan menu
 $sql = "SELECT 
+            t.id_transaksi,
+            m.id_menu,
+            dt.id_promo,
             t.tanggal,
             m.nama_menu,
             dt.jumlah,
@@ -53,11 +56,14 @@ $netTotal = 0;
     <thead>
         <tr>
             <th>Tanggal</th>
+            <th>ID Transaksi</th>
+            <th>ID Menu</th>
             <th>Nama Menu</th>
             <th>Jumlah</th>
             <th>Harga Satuan</th>
             <th>Modal</th>
             <th>Subtotal</th>
+            <th>ID Promo</th>
             <th>Net Profit</th>
         </tr>
     </thead>
@@ -69,6 +75,8 @@ $netTotal = 0;
             ?>
             <tr>
                 <td><?= htmlspecialchars($row['tanggal']) ?></td>
+                <td><?= $row['id_transaksi'] ?></td>
+                <td><?= $row['id_menu'] ?></td>
                 <td><?= htmlspecialchars($row['nama_menu']) ?></td>
                 <td><?= $row['jumlah'] ?></td>
                 
@@ -76,6 +84,7 @@ $netTotal = 0;
 
                 <td>Rp<?= number_format($row['modal'] * $row['jumlah'], 0, ',', '.') ?></td>
                 <td>Rp<?= number_format($row['subtotal'], 0, ',', '.') ?></td>
+                <td><?= $row['id_promo'] ?? '-' ?></td>
                 <td>Rp<?= number_format($row['net_profit'], 0, ',', '.') ?></td>
             </tr>
             <?php endwhile; ?>

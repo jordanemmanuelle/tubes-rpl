@@ -126,7 +126,7 @@
             <?php endwhile; ?>
         </tbody>
     </table>
-    <a href="../AdminMenu.php" style="
+    <a href="AdminMenu.php" style="
   display: inline-block;
   margin-top: 20px;
   margin-bottom: 10px;
